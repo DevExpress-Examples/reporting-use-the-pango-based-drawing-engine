@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentViewerApp", "Reporting-Use-the-DevExpress-CrossPlatform-Drawing-Engine\DocumentViewerApp\DocumentViewerApp.csproj", "{12730C88-3EA2-426A-9D34-96B33D3AD684}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentViewerApp", "Reporting-Use-the-DevExpress-CrossPlatform-Drawing-Engine\DocumentViewerApp\DocumentViewerApp.csproj", "{9EC3A5D5-03D4-4AFC-8D0E-4D68B16FCFCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{12730C88-3EA2-426A-9D34-96B33D3AD684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12730C88-3EA2-426A-9D34-96B33D3AD684}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12730C88-3EA2-426A-9D34-96B33D3AD684}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12730C88-3EA2-426A-9D34-96B33D3AD684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EC3A5D5-03D4-4AFC-8D0E-4D68B16FCFCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EC3A5D5-03D4-4AFC-8D0E-4D68B16FCFCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EC3A5D5-03D4-4AFC-8D0E-4D68B16FCFCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EC3A5D5-03D4-4AFC-8D0E-4D68B16FCFCB}.Release|Any CPU.Build.0 = Release|Any CPU
 		EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {08E55237-D659-4094-96C2-46369529EC34}
+		SolutionGuid = {34C3CCF8-16A5-4F89-AC4A-58B7CCC3A600}
 	EndGlobalSection
 EndGlobal

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using DocumentViewerApp.Services;
+using System.Runtime.InteropServices;
 
 namespace DocumentViewerApp {
     public class Startup {
@@ -38,10 +39,13 @@ namespace DocumentViewerApp {
                     viewerConfigurator.UseCachedReportSourceBuilder();
                 });
             });
-            DevExpress.Printing.CrossPlatform.CustomEngineHelper.RegisterCustomDrawingEngine(
-                typeof(
-                    DevExpress.CrossPlatform.Printing.DrawingEngine.PangoCrossPlatformEngine
-            ));
+            // https://docs.devexpress.com/XtraReports/401730/create-end-user-reporting-applications/web-reporting/asp-net-core-reporting/use-the-devexpress-cross-platform-drawing-engine
+            if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                DevExpress.Printing.CrossPlatform.CustomEngineHelper.RegisterCustomDrawingEngine(
+                    typeof(
+                        DevExpress.CrossPlatform.Printing.DrawingEngine.PangoCrossPlatformEngine
+                ));
+            }
 
         }
 

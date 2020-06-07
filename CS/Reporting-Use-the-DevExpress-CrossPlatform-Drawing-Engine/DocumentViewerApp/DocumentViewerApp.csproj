@@ -12,6 +12,14 @@
     <EmbeddedResource Include="PredefinedReports\*.repx" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Data\vehicles.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\vehicles.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="PredefinedReports\TestReport.cs">
       <DependentUpon>TestReport.repx</DependentUpon>
     </Compile>
@@ -20,9 +28,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.CrossPlatform.Printing.DrawingEngine" Version="1.0.0" />
+    <PackageReference Include="DevExpress.CrossPlatform.Printing.DrawingEngine" Version="1.*" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.109.2" />
     <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="20.1.*" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\vehicles.db" />
   </ItemGroup>
 </Project>

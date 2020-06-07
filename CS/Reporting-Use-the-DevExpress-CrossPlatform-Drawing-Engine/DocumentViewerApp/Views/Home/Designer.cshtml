@@ -37,16 +37,4 @@
 
 @(Html.DevExpress().ReportDesigner("reportDesigner")
     .Height("1000px")
-    .DataSources(dataSources => {
-        // Create a SQL data source with the specified connection string.
-        SqlDataSource ds = new SqlDataSource("NWindConnectionString");
-
-        // Create a SQL query to access the Products data table.
-        SelectQuery query = SelectQueryFluentBuilder.AddTable("Products").SelectAllColumnsFromTable().Build("Products");
-        ds.Queries.Add(query);
-        ds.RebuildResultSchema();
-
-        // Add the created data source to the list of default data sources. 
-        dataSources.Add("Northwind", ds);
-    })
     .Bind("TestReport"))
