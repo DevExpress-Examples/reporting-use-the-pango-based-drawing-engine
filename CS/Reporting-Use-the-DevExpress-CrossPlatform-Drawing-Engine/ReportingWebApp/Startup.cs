@@ -10,10 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using DocumentViewerApp.Services;
+using ReportingWebApp.Services;
 using System.Runtime.InteropServices;
 
-namespace DocumentViewerApp {
+namespace ReportingWebApp {
     public class Startup {
 		public Startup(IConfiguration configuration, IWebHostEnvironment hostingEnvironment) {
             Configuration = configuration;
@@ -26,7 +26,7 @@ namespace DocumentViewerApp {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddDevExpressControls();
-            services.AddScoped<ReportStorageWebExtension, ReportStorageWebExtension1>();
+            services.AddScoped<ReportStorageWebExtension, CustomReportStorageWebExtension>();
             services
                 .AddMvc()
 				.AddNewtonsoftJson()
@@ -39,14 +39,12 @@ namespace DocumentViewerApp {
                     viewerConfigurator.UseCachedReportSourceBuilder();
                 });
             });
+
             // https://docs.devexpress.com/XtraReports/401730/create-end-user-reporting-applications/web-reporting/asp-net-core-reporting/use-the-devexpress-cross-platform-drawing-engine
             if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 DevExpress.Printing.CrossPlatform.CustomEngineHelper.RegisterCustomDrawingEngine(
-                    typeof(
-                        DevExpress.CrossPlatform.Printing.DrawingEngine.PangoCrossPlatformEngine
-                ));
+                    typeof(DevExpress.CrossPlatform.Printing.DrawingEngine.PangoCrossPlatformEngine));
             }
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,11 +61,6 @@ namespace DocumentViewerApp {
             app.UseHttpsRedirection();
             
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "node_modules")),
-                RequestPath = "/node_modules"
-            });
 			app.UseRouting();
 
             app.UseAuthorization();

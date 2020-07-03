@@ -7,19 +7,25 @@ using System.Reflection;
 using DevExpress.XtraReports.Web.Extensions;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Hosting;
-using DocumentViewerApp.PredefinedReports;
+using ReportingWebApp.PredefinedReports;
 
-namespace DocumentViewerApp.Services
+namespace ReportingWebApp.Services
 {
-    public class ReportStorageWebExtension1 : DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension
+    public class CustomReportStorageWebExtension : DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension
     {
         readonly string ReportDirectory;
         const string FileExtension = ".repx";
-        public ReportStorageWebExtension1(IWebHostEnvironment env) {
+        public CustomReportStorageWebExtension(IWebHostEnvironment env) {
             ReportDirectory = Path.Combine(env.ContentRootPath, "Reports");
             if (!Directory.Exists(ReportDirectory)) {
                 Directory.CreateDirectory(ReportDirectory);
             }
+        }
+
+        private bool IsWithinReportsFolder(string url, string folder) {
+            var rootDirectory = new DirectoryInfo(folder);
+            var fileInfo = new FileInfo(Path.Combine(folder, url));
+            return fileInfo.Directory.FullName.ToLower().StartsWith(rootDirectory.FullName.ToLower());
         }
 
         public override bool CanSetData(string url) {
@@ -35,7 +41,7 @@ namespace DocumentViewerApp.Services
             // For instance, implement your own logic to prohibit URLs that contain white spaces or some other special characters. 
             // This method is called before the CanSetData and GetData methods.
 
-            return true;
+            return Path.GetFileName(url) == url;
         }
 
         public override byte[] GetData(string url) {
@@ -53,10 +59,10 @@ namespace DocumentViewerApp.Services
                         return ms.ToArray();
                     }
                 }
-                throw new DevExpress.XtraReports.Web.ClientControls.FaultException(string.Format("Could not find report '{0}'.", url));
-            } catch (Exception) {
-                throw new DevExpress.XtraReports.Web.ClientControls.FaultException(string.Format("Could not find report '{0}'.", url));
+            } catch(Exception ex) {
+                throw new DevExpress.XtraReports.Web.ClientControls.FaultException("Could not get report data.", ex);
             }
+            throw new DevExpress.XtraReports.Web.ClientControls.FaultException(string.Format("Could not find report '{0}'.", url));
         }
 
         public override Dictionary<string, string> GetUrls() {
@@ -66,13 +72,15 @@ namespace DocumentViewerApp.Services
             
             return Directory.GetFiles(ReportDirectory, "*" + FileExtension)
                                      .Select(Path.GetFileNameWithoutExtension)
-                                     .Concat(ReportsFactory.Reports.Select(x => x.Key))
+                                     .Union(ReportsFactory.Reports.Select(x => x.Key))
                                      .ToDictionary<string, string>(x => x);
         }
 
         public override void SetData(XtraReport report, string url) {
             // Stores the specified report to a Report Storage using the specified URL. 
             // This method is called only after the IsValidUrl and CanSetData methods are called.
+            if(!IsWithinReportsFolder(url, ReportDirectory))
+                throw new DevExpress.XtraReports.Web.ClientControls.FaultException("Invalid report name.");
             report.SaveLayoutToXml(Path.Combine(ReportDirectory, url + FileExtension));
         }
 

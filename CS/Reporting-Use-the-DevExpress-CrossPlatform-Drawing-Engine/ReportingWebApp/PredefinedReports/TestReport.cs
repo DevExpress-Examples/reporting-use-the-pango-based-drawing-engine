@@ -1,7 +1,7 @@
 using System;
 using DevExpress.XtraReports.UI;
 
-namespace DocumentViewerApp.PredefinedReports
+namespace ReportingWebApp.PredefinedReports
 {
     public partial class TestReport
     {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace DocumentViewerApp.Controllers {
+namespace ReportingWebApp.Controllers {
     public class HomeController : Controller {
         public IActionResult Index() {
             return View();
