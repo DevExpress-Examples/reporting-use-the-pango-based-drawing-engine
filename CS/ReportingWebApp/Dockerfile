@@ -5,6 +5,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository 'deb http://deb.debian.org/debian sid main' && \
     apt-get update && \
+    apt-get install -y libc6 -f -o APT::Immediate-Configure=0 && \
     apt-get install -y \
         libgdiplus \
         libicu-dev \
