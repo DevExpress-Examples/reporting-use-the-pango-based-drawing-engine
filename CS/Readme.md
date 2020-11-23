@@ -8,4 +8,4 @@ See the [Use the DevExpress Cross-Platform Drawing Engine](xref:http://docs.deve
 
 - [Startup.cs](CS/ReportingWebApp/Startup.cs)
 
-    The **ConfigureServices** method calls the **DevExpress.Printing.CrossPlatform.CustomEngineHelper.RegisterCustomDrawingEngine** method to register the **DevExpress CrossPlatform Drawing Engine** if the platform is not Windows. The engine does not need to be registered on Windows because reports are rendered without the issues described above.
+    The **ConfigureServices** method calls the **DevExpress.Printing.CrossPlatform.CustomEngineHelper.RegisterCustomDrawingEngine** method to register the **DevExpress CrossPlatform Drawing Engine** in the application.
