@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>f6ae735e-873b-4ee7-a667-f06c1d17ee56</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Reports\**" />
@@ -41,7 +42,7 @@
     <PackageReference Include="DevExpress.CrossPlatform.Printing.DrawingEngine" Version="1.*" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.109.2" />
-    <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="20.2.*-*" />
+    <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="21.2.*-*" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.0.415" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
