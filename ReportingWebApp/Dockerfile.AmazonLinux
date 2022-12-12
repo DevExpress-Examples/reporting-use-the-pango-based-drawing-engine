@@ -1,27 +1,29 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim AS base
-RUN apt-get update && \
-    apt-get install -y libc6 -f -o APT::Immediate-Configure=0 && \
-    apt-get install -y \
-        libgdiplus \
-        libicu-dev \
-        libharfbuzz0b \
-        libfontconfig1 \
-        libfreetype6 \
-        libpango-1.0-0 \
-        libpangocairo-1.0
+FROM amazonlinux AS base
+RUN rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+RUN yum install -y aspnetcore-runtime-6.0
+RUN yum install -y libgdiplus glibc glibc-devel && \
+    yum install -y libicu fontconfig harfbuzz freetype && \
+    yum install -y pango && \
+    rpmkeys --import "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF" && \
+    su -c 'curl https://download.mono-project.com/repo/centos7-stable.repo | tee /etc/yum.repos.d/mono-centos7-stable.repo' && \
+    yum install -y mono-devel
 
 WORKDIR /app
+
 EXPOSE 80
 EXPOSE 443
 
-FROM node:18-bullseye as frontend
+FROM node:18 as frontend
 WORKDIR /modules
 COPY ["package.json", "./"]
 RUN npm install
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
+FROM amazonlinux AS build
+RUN rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+RUN yum install -y dotnet-sdk-6.0
+
 WORKDIR /src
 RUN --mount=type=secret,id=dxnuget dotnet nuget add source $(cat /run/secrets/dxnuget) -n devexpress-nuget
 COPY ["ReportingWebApp.csproj", "ReportingWebApp/"]
@@ -37,4 +39,5 @@ RUN dotnet publish "ReportingWebApp.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_URLS=http://+:80
 ENTRYPOINT ["dotnet", "ReportingWebApp.dll"]
