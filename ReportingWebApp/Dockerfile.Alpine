@@ -1,15 +1,21 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine3.16 AS base
-RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    apk update && \
-    apk upgrade && \
-    apk add icu-libs libgdiplus@testing pango cairo icu-dev harfbuzz freetype fontconfig && \
-    rm -rf /var/cache/apk/* && \
+
+#Install dependencies
+RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && apk update && apk upgrade
+RUN apk add icu-libs  icu-data-full libgdiplus@testing harfbuzz freetype fontconfig
+RUN apk add pango cairo
+
+#Install fonts
+RUN apk add ttf-dejavu && \
+    apk add msttcorefonts-installer && \
     apk add ttf-dejavu && \
+    update-ms-fonts && \
     fc-cache -f
 
 WORKDIR /app
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 EXPOSE 80
 EXPOSE 443
 
@@ -18,7 +24,7 @@ WORKDIR /modules
 COPY ["package.json", "./"]
 RUN npm install
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine3.16 AS build
 WORKDIR /src
 RUN --mount=type=secret,id=dxnuget dotnet nuget add source $(cat /run/secrets/dxnuget) -n devexpress-nuget
 COPY ["ReportingWebApp.csproj", "ReportingWebApp/"]
