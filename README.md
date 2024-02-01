@@ -8,5 +8,5 @@
 This example demonstrates how to enable the [Pango-Based CrossPlatform Drawing Engine](https://www.nuget.org/packages/DevExpress.CrossPlatform.Printing.DrawingEngine) in an ASP.NET Core application to preview, [print](https://docs.devexpress.com/XtraReports/15797), or [export](https://docs.devexpress.com/XtraReports/2618) DevExpress XtraReports.
 
 >[!Important]
-> The Pango-based drawing engine is not obsolete. Please use the SkiaSharp-based drawing engine instead. Refer to the following example for implementation details: [Reporting for ASP.NET Core - How to Use the SkiaSharp-Based DevExpress Drawing Engine](https://github.com/DevExpress-Examples/reporting-use-devexpress-drawing-skia-engine)
+> The Pango-based drawing engine is now obsolete. Please use the SkiaSharp-based drawing engine instead. Refer to the following example for implementation details: [Reporting for ASP.NET Core - How to Use the SkiaSharp-Based DevExpress Drawing Engine](https://github.com/DevExpress-Examples/reporting-use-devexpress-drawing-skia-engine)
     
